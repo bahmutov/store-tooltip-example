@@ -1,0 +1,17 @@
+{
+  "name": "store-tooltip-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.11.0",
+    "cypress-real-events": "^1.12.0",
+    "prettier": "^3.3.1"
+  }
+}
