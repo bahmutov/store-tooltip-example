@@ -4,7 +4,7 @@
 // https://github.com/dmtrKovalenko/cypress-real-events
 import 'cypress-real-events/support'
 
-it('adds an item to the cart via tooltip', () => {
+it('adds an item to the cart via tooltip', { scrollBehavior: 'center' }, () => {
   // open the product page
   cy.visit('/index.php?route=product/manufacturer/info&manufacturer_id=8')
   // there should be several products on the page
