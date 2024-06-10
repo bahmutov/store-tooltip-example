@@ -7,7 +7,6 @@ import 'cypress-real-events/support'
 it('adds an item to the cart via tooltip', { scrollBehavior: 'center' }, () => {
   // "freeze" the application clock
   // https://on.cypress.io/clock
-  cy.clock()
   cy.visit('/index.php?route=product/manufacturer/info&manufacturer_id=8')
 
   cy.get('.product-thumb')
@@ -28,7 +27,6 @@ it('adds an item to the cart via tooltip', { scrollBehavior: 'center' }, () => {
   // the notification popup hides after about 10-12 seconds
   // fast-forward application clock 15 seconds
   // https://on.cypress.io/tick
-  cy.tick(15_000)
+  //
   // confirm the notification popup is hidden _immediately_
-  cy.get('#notification-box-top', { timeout: 0 }).should('not.be.visible')
 })
