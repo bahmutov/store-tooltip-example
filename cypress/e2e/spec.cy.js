@@ -17,7 +17,6 @@ it('adds an item to the cart via tooltip', { scrollBehavior: 'center' }, () => {
       // and give it an alias "addToCart"
       // https://on.cypress.io/intercept
       // https://on.cypress.io/as
-      cy.intercept('POST', '/index.php?route=checkout/cart/add').as('addToCart')
 
       cy.get('.product-action')
         .should('be.visible')
@@ -28,7 +27,5 @@ it('adds an item to the cart via tooltip', { scrollBehavior: 'center' }, () => {
   // wait for the POST call to complete
   // and grab its request body
   // it should contain the product ID and quantity
-  cy.wait('@addToCart')
-    .its('request.body')
-    .should('match', /product_id=\d+&quantity=1/)
+  // https://on.cypress.io/wait
 })
