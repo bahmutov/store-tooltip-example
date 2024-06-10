@@ -17,16 +17,10 @@ it('adds an item to the cart via tooltip', { scrollBehavior: 'center' }, () => {
 
       // get the product id from the image A element
       // it is encoded in the "id" attribute like "mz-product-grid-image-1234"
-      cy.get('a[id^=mz-product-grid-image-]')
-        .should('have.attr', 'id')
-        // yields the "id" attribute
-        // capture the "id" part of the string using regex capture group
-        .invoke('match', /mz-product-grid-image-(?<id>\d+)/)
-        .its('groups.id')
-        .should('be.a', 'string')
-        // and save it as an alias "productId"
-        // https://on.cypress.io/as
-        .as('productId', { type: 'static' })
+      // yields the "id" attribute
+      // capture the "id" part of the string using regex capture group
+      // and save it as an alias "productId"
+      // https://on.cypress.io/as
 
       cy.get('.product-action')
         .should('be.visible')
@@ -38,9 +32,5 @@ it('adds an item to the cart via tooltip', { scrollBehavior: 'center' }, () => {
   // and use it to confirm the _exact_ request body
   // sent to the server by the "addToCart" network call
   // https://on.cypress.io/get
-  cy.get('@productId').then((productId) => {
-    cy.wait('@addToCart')
-      .its('request.body')
-      .should('equal', `product_id=${productId}&quantity=1`)
-  })
+  cy.wait('@addToCart').its('request.body').should('equal', `???`)
 })
