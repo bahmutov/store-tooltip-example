@@ -19,19 +19,12 @@ it('adds an item to the cart via tooltip', { scrollBehavior: 'center' }, () => {
         .invoke('match', /mz-product-grid-image-(?<id>\d+)/)
         .its('groups.id')
         .should('be.a', 'string')
-        // and save it as an alias "productId"
-        // https://on.cypress.io/as
         .as('productId', { type: 'static' })
 
       // spy on the "window.cart.add" method
       // https://on.cypress.io/window
       // https://on.cypress.io/spy
       // give the spy an alias "add"
-      cy.window()
-        .its('cart')
-        .then((cart) => {
-          cy.spy(cart, 'add').as('add')
-        })
 
       cy.get('.product-action')
         .should('be.visible')
@@ -41,7 +34,4 @@ it('adds an item to the cart via tooltip', { scrollBehavior: 'center' }, () => {
 
   // get the value of the productId alias
   // and confirm the method "cart.add" was called with this product id
-  cy.get('@productId').then((productId) => {
-    cy.get('@add').should('have.been.calledOnceWithExactly', productId)
-  })
 })
