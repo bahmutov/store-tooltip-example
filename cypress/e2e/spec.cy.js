@@ -13,20 +13,25 @@ it('adds an item to the cart via tooltip', { scrollBehavior: 'center' }, () => {
     .within(() => {
       cy.get('.product-action').should('not.be.visible')
       cy.get('.product-thumb-top').realHover()
-      cy.intercept('POST', '/index.php?route=checkout/cart/add').as('addToCart')
-
       // get the product id from the image A element
-      // it is encoded in the "id" attribute like "mz-product-grid-image-1234"
       cy.get('a[id^=mz-product-grid-image-]')
         .should('have.attr', 'id')
-        // yields the "id" attribute
-        // capture the "id" part of the string using regex capture group
         .invoke('match', /mz-product-grid-image-(?<id>\d+)/)
         .its('groups.id')
         .should('be.a', 'string')
         // and save it as an alias "productId"
         // https://on.cypress.io/as
         .as('productId', { type: 'static' })
+
+      // spy on the "window.cart.add" method
+      // https://on.cypress.io/window
+      // https://on.cypress.io/spy
+      // give the spy an alias "add"
+      cy.window()
+        .its('cart')
+        .then((cart) => {
+          cy.spy(cart, 'add').as('add')
+        })
 
       cy.get('.product-action')
         .should('be.visible')
@@ -35,12 +40,8 @@ it('adds an item to the cart via tooltip', { scrollBehavior: 'center' }, () => {
     })
 
   // get the value of the productId alias
-  // and use it to confirm the _exact_ request body
-  // sent to the server by the "addToCart" network call
-  // https://on.cypress.io/get
+  // and confirm the method "cart.add" was called with this product id
   cy.get('@productId').then((productId) => {
-    cy.wait('@addToCart')
-      .its('request.body')
-      .should('equal', `product_id=${productId}&quantity=1`)
+    cy.get('@add').should('have.been.calledOnceWithExactly', productId)
   })
 })
