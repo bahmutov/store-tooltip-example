@@ -29,4 +29,5 @@ it('adds an item to the cart via tooltip', { scrollBehavior: 'center' }, () => {
   // https://on.cypress.io/tick
   //
   // confirm the notification popup is hidden _immediately_
+  cy.get('#notification-box-top', { timeout: 15_000 }).should('be.hidden')
 })
